@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="GridOptima - Smart Electricity Distribution Network Optimization using Prim's and Kruskal's algorithms.">
+  <title>GridOptima | Smart Grid Optimization</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#"><span class="brand-mark">G</span><span>Grid<span class="brand-light">Optima</span></span></a>
+      <div class="side-label">WORKSPACE</div>
+      <a class="nav-link active" href="#dashboard">▦ <span>Dashboard</span></a>
+      <a class="nav-link" href="#network">⌘ <span>Network Builder</span></a>
+      <a class="nav-link" href="#algorithms">◈ <span>Algorithms</span></a>
+      <a class="nav-link" href="#comparison">▥ <span>Comparison</span></a>
+      <div class="sidebar-bottom">
+        <div class="status-dot"></div><span>Optimization engine ready</span>
+        <small>DAA PROJECT · 2026</small>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div><div class="eyebrow">SMART GRID MANAGEMENT</div><h1>Network optimization</h1></div>
+        <div class="top-actions"><span class="live-pill"><i></i> SYSTEM ONLINE</span><span class="avatar">GO</span></div>
+      </header>
+
+      <section class="hero" id="dashboard">
+        <div class="hero-copy">
+          <div class="eyebrow hero-eyebrow">INTELLIGENT POWER DISTRIBUTION</div>
+          <h2>Build a smarter grid.<br><em>Spend less. Connect more.</em></h2>
+          <p>Design a connected electricity network and discover its minimum construction cost using two classic graph algorithms.</p>
+          <a class="primary-btn" href="#network">Open network builder <span>↗</span></a>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+          <div class="grid-core">⚡</div>
+          <span class="node node-a">⌂</span><span class="node node-b">▥</span><span class="node node-c">⌂</span><span class="node node-d">▦</span>
+          <span class="art-line line-a"></span><span class="art-line line-b"></span><span class="art-line line-c"></span><span class="art-line line-d"></span>
+          <span class="art-caption">CONNECTED<br>INFRASTRUCTURE</span>
+        </div>
+      </section>
+
+      <section class="stats-grid">
+        <article class="stat-card"><div class="stat-top">BUILDINGS <span>⌂</span></div><strong id="statNodes">6</strong><small>Locations in network</small></article>
+        <article class="stat-card"><div class="stat-top">POSSIBLE LINKS <span>⌁</span></div><strong id="statEdges">9</strong><small>Available connections</small></article>
+        <article class="stat-card accent-card"><div class="stat-top">MINIMUM COST <span>₹</span></div><strong id="statCost">—</strong><small>Run an algorithm to calculate</small></article>
+        <article class="stat-card"><div class="stat-top">MST CONNECTIONS <span>⌘</span></div><strong id="statMst">—</strong><small>Required for a connected network</small></article>
+      </section>
+
+      <section class="panel" style="margin:22px 0;padding:24px" id="campus-scenario">
+        <div class="panel-heading"><div><div class="eyebrow">REAL-WORLD CASE STUDY</div><h3>Our six-building campus</h3></div><span class="tag">SAMPLE SCENARIO</span></div>
+        <p class="panel-subtitle">A campus receives electricity from one main substation. The engineering team has identified nine possible underground cable routes. Each route has an estimated relative installation cost (cost units), and the goal is to connect every building at minimum total cost.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:12px;margin-top:18px">
+          <div class="stat-card"><div class="stat-top">A · SOURCE</div><strong style="font-size:18px">Main Substation</strong><small>Receives and distributes grid supply</small></div>
+          <div class="stat-card"><div class="stat-top">B · BUILDING</div><strong style="font-size:18px">Academic Block</strong><small>Classrooms and laboratories</small></div>
+          <div class="stat-card"><div class="stat-top">C · BUILDING</div><strong style="font-size:18px">Library</strong><small>Library and study facilities</small></div>
+          <div class="stat-card"><div class="stat-top">D · BUILDING</div><strong style="font-size:18px">Hostel Block</strong><small>Student accommodation</small></div>
+          <div class="stat-card"><div class="stat-top">E · BUILDING</div><strong style="font-size:18px">Canteen</strong><small>Dining and food services</small></div>
+          <div class="stat-card"><div class="stat-top">F · BUILDING</div><strong style="font-size:18px">Administration</strong><small>Campus administration offices</small></div>
+        </div>
+        <div style="margin-top:18px;padding:15px;border-radius:12px;background:rgba(30,150,120,.08)"><b>How to read the network:</b> A, B, C, D, E and F are vertices (buildings). A line between two letters is a possible cable route (edge). The number on that line is its relative installation cost (weight). A route is a possibility, not a cable that has already been built.</div>
+      </section>
+
+      <section class="workspace-grid" id="network">
+        <article class="panel network-panel">
+          <div class="panel-heading"><div><div class="eyebrow">LIVE GRAPH</div><h3>Network builder</h3></div><button class="ghost-btn" id="resetBtn">↺ Reset sample</button></div>
+          <p class="panel-subtitle">Each circle is a named campus building (vertex). Each labelled line is a possible cable route (weighted edge).</p>
+          <div class="graph-wrap"><svg id="graph" viewBox="0 0 700 390" role="img" aria-label="Electricity distribution network graph"></svg></div>
+          <div class="legend"><span><i class="legend-node"></i> Building / Substation</span><span><i class="legend-edge"></i> Possible power line</span><span><i class="legend-mst"></i> Selected MST line</span></div>
+          <div class="graph-note" id="graphNote">Run an algorithm to highlight the minimum spanning tree.</div>
+        </article>
+
+        <article class="panel controls-panel">
+          <div class="panel-heading"><div><div class="eyebrow">CUSTOMIZE INPUT</div><h3>Network data</h3></div><span class="tag">UNDIRECTED GRAPH</span></div>
+          <div class="form-section">
+            <label for="nodeName">Add a building / location</label>
+            <div class="input-row"><input id="nodeName" placeholder="e.g. Airport" maxlength="40"><button id="addNodeBtn" class="small-primary">Add</button></div>
+          </div>
+          <div class="form-section">
+            <label>Add a possible power line</label>
+            <div class="triple-row"><select id="edgeU" aria-label="First building"></select><select id="edgeV" aria-label="Second building"></select><input id="edgeWeight" type="number" min="0" step="1" placeholder="Cost"></div>
+            <button id="addEdgeBtn" class="outline-btn full-btn">+ Add connection</button>
+          </div>
+          <div class="data-list-wrap"><div class="list-title">CURRENT CONNECTIONS <span id="edgeCountLabel">9 links</span></div><div id="edgeList" class="edge-list"></div></div>
+          <div class="form-foot"><span id="nodeCountLabel">6 buildings</span><span>Max 100 vertices</span></div>
+        </article>
+      </section>
+
+      <section class="algorithm-section" id="algorithms">
+        <div class="section-heading"><div><div class="eyebrow">MINIMUM SPANNING TREE</div><h3>Run an algorithm</h3><p>Both algorithms find a minimum-cost spanning tree for a connected, weighted, undirected graph.</p></div></div>
+        <div class="algorithm-cards">
+          <article class="algorithm-card prim-card"><div class="algo-icon">P</div><div class="algo-title-row"><div><h4>Prim's Algorithm</h4><span class="complexity">O(V²) · Adjacency matrix</span></div><span class="algo-number">01</span></div><p>Starts from a vertex and repeatedly adds the cheapest edge connecting the current tree to a new vertex.</p><button class="run-btn" id="runPrim">Run Prim's algorithm <span>→</span></button></article>
+          <article class="algorithm-card kruskal-card"><div class="algo-icon">K</div><div class="algo-title-row"><div><h4>Kruskal's Algorithm</h4><span class="complexity">O(E log E) · Sorting + DSU</span></div><span class="algo-number">02</span></div><p>Sorts all edges by weight and accepts the cheapest edges that do not create a cycle.</p><button class="run-btn" id="runKruskal">Run Kruskal's algorithm <span>→</span></button></article>
+        </div>
+      </section>
+
+      <section class="results-grid">
+        <article class="panel results-panel">
+          <div class="panel-heading"><div><div class="eyebrow">ALGORITHM OUTPUT</div><h3 id="resultTitle">Optimization results</h3></div><span id="resultStatus" class="tag muted-tag">AWAITING RUN</span></div>
+          <div id="resultEmpty" class="empty-state"><div class="empty-icon">⌁</div><strong>No results yet</strong><span>Run Prim's or Kruskal's algorithm to see the selected power lines.</span></div>
+          <div id="resultContent" class="hidden">
+            <div class="result-metrics"><div><small>MINIMUM TOTAL COST</small><strong id="resultCost">—</strong></div><div><small>SELECTED CONNECTIONS</small><strong id="resultCount">—</strong></div><div><small>C EXECUTION TIME</small><strong id="resultTime">—</strong></div></div>
+            <div class="table-scroll"><table><thead><tr><th>FROM</th><th>TO</th><th>CONSTRUCTION COST</th></tr></thead><tbody id="resultRows"></tbody></table></div>
+            <div class="steps-title">ALGORITHM STEPS</div><ol id="stepsList" class="steps-list"></ol>
+          </div>
+        </article>
+        <article class="panel compare-panel" id="comparison">
+          <div class="eyebrow">SIDE-BY-SIDE ANALYSIS</div><h3>Algorithm comparison</h3>
+          <p class="panel-subtitle">Run both algorithms on the same graph to compare their results.</p>
+          <div class="compare-row"><div><b>Prim's</b><small>Vertex-based growth</small></div><strong id="primCompare">Not run</strong></div>
+          <div class="compare-row"><div><b>Kruskal's</b><small>Edge-based selection</small></div><strong id="kruskalCompare">Not run</strong></div>
+          <div class="compare-summary" id="compareSummary">The comparison will appear after running both algorithms.</div>
+          <div class="complexity-box"><b>Time complexity</b><span>Prim (matrix): O(V²)</span><span>Kruskal: O(E log E)</span><small>V = number of vertices · E = number of edges</small></div>
+        </article>
+      </section>
+
+      <section class="about-strip">
+        <div><div class="eyebrow">THE DAA CONCEPT</div><h3>Minimum Spanning Tree</h3><p>An MST is a subset of edges that connects every vertex in a connected, weighted, undirected graph, contains no cycles, and has the minimum possible sum of edge weights.</p></div>
+        <div class="about-facts"><span><b>V − 1</b> edges in an MST</span><span><b>No cycles</b> in a spanning tree</span><span><b>Minimum sum</b> of selected edge weights</span></div>
+      </section>
+      <footer>GRIDOPTIMA <span>DAA MINI PROJECT · SMART ELECTRICITY DISTRIBUTION NETWORK OPTIMIZATION</span></footer>
+    </main>
+  </div>
+  <div id="toast" class="toast" role="status"></div>
+  <script src="/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+venv/
+__pycache__/
+*.pyc
+.env
+
+# Keep project documentation private
+report/
+*.pptx
+*.docx
+
+# Compiled Windows executables
+*.exe
